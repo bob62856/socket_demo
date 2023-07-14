@@ -28,7 +28,7 @@ int main() {
     }
 
     // Convert IP address from string to binary format
-    if (inet_pton(AF_INET, "10.44.79.158", &address.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, "ServerIpAddr", &address.sin_addr) <= 0) {
         perror("inet_pton failed");
         exit(EXIT_FAILURE);
     }

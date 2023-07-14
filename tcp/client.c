@@ -23,7 +23,7 @@ int main() {
     serv_addr.sin_port = htons(PORT);
 
     // Convert IP address from string to binary format
-    if (inet_pton(AF_INET, "10.44.79.158", &serv_addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, "ServerIpAddr", &serv_addr.sin_addr) <= 0) {
         perror("inet_pton failed");
         exit(EXIT_FAILURE);
     }
