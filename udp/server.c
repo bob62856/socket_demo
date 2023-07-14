@@ -7,10 +7,15 @@
 #define SERVER_PORT 8888       // Server port number
 #define BUFFER_SIZE 1024       // Maximum buffer size
 
-int main() {
+int main(int argc, char *argv[]) {
     int server_socket;
     struct sockaddr_in server_address, client_address;
     char buffer[BUFFER_SIZE];
+
+	if (argc <= 1) {
+		perror("Enter server address ip argument");
+		exit(EXIT_FAILURE);
+	}
 
     // Create socket
     if ((server_socket = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
@@ -24,7 +29,7 @@ int main() {
     server_address.sin_port = htons(SERVER_PORT);
 
     // Convert IP address from string to binary format
-    if (inet_pton(AF_INET, "ServerIpAddr", &server_address.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, argv[1], &server_address.sin_addr) <= 0) {
         perror("inet_pton failed");
         exit(EXIT_FAILURE);
     }

@@ -4,14 +4,18 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define SERVER_IP "ServerIpAddr"  // Server IP address
 #define SERVER_PORT 8888       // Server port number
 #define BUFFER_SIZE 1024       // Maximum buffer size
 
-int main() {
+int main(int argc, char *argv[]) {
     int client_socket;
     struct sockaddr_in server_address;
     char buffer[BUFFER_SIZE];
+
+	if (argc <= 1) {
+		perror("Enter server address ip argument");
+		exit(EXIT_FAILURE);
+	}
 
     // Create socket
     if ((client_socket = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
@@ -23,7 +27,7 @@ int main() {
     memset(&server_address, 0, sizeof(server_address));
     server_address.sin_family = AF_INET;
     server_address.sin_port = htons(SERVER_PORT);
-    if (inet_pton(AF_INET, SERVER_IP, &(server_address.sin_addr)) <= 0) {
+    if (inet_pton(AF_INET, argv[1], &(server_address.sin_addr)) <= 0) {
         perror("Invalid address/Address not supported");
         exit(EXIT_FAILURE);
     }

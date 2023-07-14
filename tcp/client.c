@@ -7,11 +7,16 @@
 #define PORT 8080
 #define BUFFER_SIZE 1024
 
-int main() {
+int main(int argc, char *argv[]) {
     int sock = 0, valread;
     struct sockaddr_in serv_addr;
     const char* message = "Hello, server!";
     char buffer[BUFFER_SIZE] = {0};
+	
+	if (argc <= 1) {
+		perror("Enter server address ip argument");
+		exit(EXIT_FAILURE);
+	}
 
     // Create socket
      if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -23,7 +28,7 @@ int main() {
     serv_addr.sin_port = htons(PORT);
 
     // Convert IP address from string to binary format
-    if (inet_pton(AF_INET, "ServerIpAddr", &serv_addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, argv[1], &serv_addr.sin_addr) <= 0) {
         perror("inet_pton failed");
         exit(EXIT_FAILURE);
     }
